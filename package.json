@@ -2,7 +2,7 @@
   "name": "v-popper",
   "version": "0.0.1",
   "description": "vue popper.js",
-  "main": "index.js",
+  "main": "./dist/v-popper.min.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot --inline",
     "lint": "eslint src demo --fix",
