@@ -38,10 +38,12 @@ export default {
       type: Number,
       default: 10
     },
+    // 偏移属性
     offset: {
       type: String,
       default: '0'
-    }
+    },
+    disabled: Boolean
   },
   data() {
     return {
@@ -98,8 +100,6 @@ export default {
     document.addEventListener('click', this.handleClickOutside);
   },
   methods: {
-    createPopper() {
-    },
 
     updatePopper() {
       this.popperJS && this.popperJS.scheduleUpdate();
@@ -116,14 +116,17 @@ export default {
       document.removeEventListener('click', this.handleClickOutside);
     },
     doToggle() {
+      if (this.disabled) return;
       this.visible = !this.visible;
     },
 
     doShow() {
+      if (this.disabled) return;
       this.visible = true;
     },
 
     doClose() {
+      if (this.disabled) return;
       this.visible = false;
     },
 
