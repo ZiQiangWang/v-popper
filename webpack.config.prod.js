@@ -3,8 +3,12 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const path = require('path');
 
 module.exports = {
-  entry: './demo/index.js',
-  mode: 'development',
+  mode: 'production',
+  output: {
+    filename: 'v-popper.min.js',
+    library: "v-popper",
+    libraryTarget: "umd"
+  },
   module:{
     rules:[
       {
@@ -24,11 +28,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './demo/index.html'
-    }),
     new VueLoaderPlugin()
   ],
+  externals : {
+    'popper.js': 'popper.js'
+  },
   resolve: {
     alias: {
       'vue': 'vue/dist/vue.js'

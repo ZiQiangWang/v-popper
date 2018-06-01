@@ -20,11 +20,23 @@ import Popper from 'popper.js';
 export default {
   name: 'Popper',
   props: {
+    // 显示时的动画
     transition: String,
+    // popper.js选项
     options: Object,
+    // 触发方式，有hover和click两种
     trigger: {
       type: String,
       default: 'hover'
+    },
+    // 是否插入body
+    appendToBody: Boolean,
+    // 边界范围，应该为选择器
+    boundary: String,
+    // hover延时
+    delay: {
+      type: Number,
+      default: 10
     }
   },
   data() {
@@ -34,6 +46,7 @@ export default {
       defaultOption: {
         placement: 'bottom',
       },
+      popperJS: null
     }
   },
   computed: {
@@ -44,38 +57,96 @@ export default {
       return this.$refs.popper;
     }
   },
+  watch: {
+    visible(val) {
+      if (val) {
+        this.$emit('show');
+        this.updatePopper();
+      } else {
+        this.$emit('hide');
+      }
+    }
+  },
+  mounted() {
+    const options = Object.assign({}, this.defaultOption, this.options);
+    options.onCreate = () => {
+      this.$emit('created', this);
+    }
+    if (this.appendToBody) {
+      document.body.appendChild(this.popper);
+    }
+
+    if (this.boundary) {
+      const boundaryEle = document.querySelector(this.boundary);
+      if (boundaryEle) {
+        options.modifiers = Object.assign({}, options.modifiers);
+        options.modifiers.preventOverflow = Object.assign({}, options.modifiers.preventOverflow);
+        options.modifiers.preventOverflow.boundariesElement = boundaryEle;
+      }
+    }
+    this.popperJS = new Popper(this.reference, this.popper, options);
+    document.addEventListener('click', this.handleClickOutside);
+  },
   methods: {
+    createPopper() {
+    },
+
+    updatePopper() {
+      this.popperJS && this.popperJS.scheduleUpdate();
+    },
+    doDestroy() {
+      if (this.popperJS) {
+        this.popperJS.destroy();
+      }
+
+      if (this.appendToBody) {
+        document.body.removeChild(this.popper);
+      }
+
+      document.removeEventListener('click', this.handleClickOutside);
+    },
+    doToggle() {
+      this.visible = !this.visible;
+    },
+
+    doShow() {
+      this.visible = true;
+    },
+
+    doClose() {
+      this.visible = false;
+    },
+
+    destroyed() {
+      this.doDestroy();
+    },
+
+    handleClickOutside(e) {
+      if (this.reference.contains(e.target) || this.popper.contains(e.target)) {
+        return;
+      }
+      this.doClose();
+    },
+
     handleClickReference() {
       if (this.trigger === 'click') {
-        this.visible = !this.visible;
+        this.doToggle();
       }
     },
     handleMouseEnter() {
       if (this.trigger === 'hover') {
-        this.visible = true;
+        setTimeout(() => {
+          this.doShow();
+        }, this.delay);
       }
     },
     handleMouseLeave() {
       if (this.trigger === 'hover') {
-        this.visible = false;
+        setTimeout(() => {
+          this.doClose();
+        }, this.delay);
       }
     }
   }
 }
 </script>
-
-<style lang="less">
-  .zoom-in-top-enter-active,
-  .zoom-in-top-leave-active {
-    opacity: 1;
-    transform: scaleY(1);
-    transition: all 0.2s ease;
-    transform-origin: center top;
-  }
-  .zoom-in-top-enter,
-  .zoom-in-top-leave-active {
-    opacity: 0;
-    transform: scaleY(0);
-  }
-
-</style>
