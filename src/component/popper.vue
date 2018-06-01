@@ -43,7 +43,11 @@ export default {
       type: String,
       default: '0'
     },
-    disabled: Boolean
+    disabled: Boolean,
+    zIndex: {
+      type: Number,
+      default: 10
+    }
   },
   data() {
     return {
@@ -97,6 +101,7 @@ export default {
       options.modifiers.offset.offset = this.offset;
     }
     this.popperJS = new Popper(this.reference, this.popper, options);
+    this.popper.style['z-index'] = this.zIndex;
     document.addEventListener('click', this.handleClickOutside);
   },
   methods: {

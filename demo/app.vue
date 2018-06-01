@@ -3,7 +3,6 @@
     <popper
       trigger="click"
       append-to-body
-      disabled
       transition="zoom-in-top"
       offset="0,20"
       :options="{

@@ -1,6 +1,6 @@
 {
   "name": "v-popper",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "vue popper.js",
   "main": "./dist/v-popper.min.js",
   "scripts": {
