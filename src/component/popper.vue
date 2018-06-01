@@ -37,6 +37,10 @@ export default {
     delay: {
       type: Number,
       default: 10
+    },
+    offset: {
+      type: String,
+      default: '0'
     }
   },
   data() {
@@ -83,6 +87,12 @@ export default {
         options.modifiers.preventOverflow = Object.assign({}, options.modifiers.preventOverflow);
         options.modifiers.preventOverflow.boundariesElement = boundaryEle;
       }
+    }
+
+    if (this.offset) {
+      options.modifiers = Object.assign({}, options.modifiers);
+      options.modifiers.offset = Object.assign({}, options.modifiers.offset);
+      options.modifiers.offset.offset = this.offset;
     }
     this.popperJS = new Popper(this.reference, this.popper, options);
     document.addEventListener('click', this.handleClickOutside);

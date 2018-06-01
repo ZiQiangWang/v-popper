@@ -4,8 +4,9 @@
       trigger="click"
       append-to-body
       transition="zoom-in-top"
+      offset="0,20"
       :options="{
-        placement: 'bottom'
+        placement: 'bottom-start'
       }">
         <ul>
           <li>hello world</li>
