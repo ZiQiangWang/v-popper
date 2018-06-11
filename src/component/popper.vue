@@ -39,11 +39,10 @@ export default {
       default: 10
     },
     // 偏移属性
-    offset: {
-      type: String,
-      default: '0'
-    },
+    offset: String,
+    // 不可用状态
     disabled: Boolean,
+    // 调整z-index
     zIndex: {
       type: Number,
       default: 10
@@ -53,9 +52,11 @@ export default {
     return {
       // 是否可见
       visible: false,
+      // 缺省popperjs属性
       defaultOption: {
         placement: 'bottom',
       },
+      // popperjs实例
       popperJS: null
     }
   },
@@ -148,7 +149,9 @@ export default {
 
     handleClickReference() {
       if (this.trigger === 'click') {
-        this.doToggle();
+        setTimeout(() => {
+          this.doToggle();
+        }, this.delay);
       }
     },
     handleMouseEnter() {

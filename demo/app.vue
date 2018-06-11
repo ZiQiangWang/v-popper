@@ -6,9 +6,9 @@
       transition="zoom-in-top"
       offset="0,20"
       :options="{
-        placement: 'bottom-start'
+        placement: 'top'
       }">
-        <ul>
+        <ul class="popper">
           <li>hello world</li>
           <li>hello world</li>
           <li>hello world</li>
@@ -42,12 +42,18 @@ export default {
     height: 100%;
     margin: 100px;
   }
+  .popper {
+    margin: 0;
+    padding: 0;
+    background: lightgray;
+    list-style: none;
+    padding: 10px;
+  }
 
   .zoom-in-top-enter-active,
   .zoom-in-top-leave-active {
     opacity: 1;
-    transform: scaleY(1);
-    transition: all 0.2s ease;
+    transition: opacity 0.2s ease;
     transform-origin: center top;
   }
   .zoom-in-top-enter,

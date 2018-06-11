@@ -1,6 +1,6 @@
 {
   "name": "v-popper",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "vue popper.js",
   "main": "./dist/v-popper.min.js",
   "scripts": {
@@ -16,7 +16,8 @@
   "keywords": [
     "vue",
     "popper.js",
-    "component"
+    "component",
+    "popper"
   ],
   "author": "ZiQiangWang",
   "license": "MIT",
